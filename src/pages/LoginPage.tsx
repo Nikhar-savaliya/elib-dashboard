@@ -8,9 +8,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleLogin = () => {
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+
+    // make server call
+    console.table([email, password]);
+  };
+
   return (
     <section className="flex items-center justify-center h-screen">
       <Card className="w-full max-w-sm">
@@ -23,13 +35,15 @@ const Login = () => {
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" required />
+            <Input id="email" type="email" required ref={emailRef} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required />
+            <Input id="password" type="password" required ref={passwordRef} />
           </div>
-          <Button className="w-full">Sign in</Button>
+          <Button className="w-full" onClick={handleLogin}>
+            Sign in
+          </Button>
           <div className="mt-2 text-sm text-center ">
             Don't have an account?{" "}
             <Link to="/auth/register" className="underline">
