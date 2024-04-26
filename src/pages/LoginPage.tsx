@@ -32,7 +32,7 @@ const Login = () => {
           <Button className="w-full">Sign in</Button>
           <div className="mt-2 text-sm text-center ">
             Don't have an account?{" "}
-            <Link to="/register" className="underline">
+            <Link to="/auth/register" className="underline">
               register
             </Link>
           </div>
