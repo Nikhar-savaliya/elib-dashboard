@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,19 +11,43 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/api_utils/api";
 
 const Login = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      toast({
+        variant: "success",
+        title: "logged in successfully",
+        duration: 1500,
+      });
+      navigate("/dashboard/home");
+    },
+  });
 
   const handleLogin = () => {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
 
+    if (!email || !password) {
+      return toast({
+        variant: "destructive",
+        title: "Please enter email and password correctly",
+        duration: 1500,
+      });
+    }
+
     // make server call
-    console.table([email, password]);
+    mutation.mutate({ email, password });
   };
 
   return (
