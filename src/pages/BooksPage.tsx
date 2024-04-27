@@ -34,9 +34,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Loader2, MoreHorizontal } from "lucide-react";
+import { Loader2, MoreHorizontal, PlusCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Book } from "@/types/Book";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -48,7 +49,7 @@ const BooksPage = (props: Props) => {
   });
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 ">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -60,12 +61,24 @@ const BooksPage = (props: Props) => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <Card x-chunk="dashboard-06-chunk-0">
-        <CardHeader>
-          <CardTitle>Books</CardTitle>
-          <CardDescription>Manage your Books right from here</CardDescription>
+
+      <Card x-chunk="dashboard-06-chunk-0" className="">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Books</CardTitle>
+            <CardDescription>Manage your Books right from here</CardDescription>
+          </div>
+          <Link to={"/dashboard/books/create"}>
+            <Button
+              className="flex items-center gap-1"
+              disabled={isLoading || isError}
+            >
+              <PlusCircle width={16} />
+              <span>Add a Book</span>
+            </Button>
+          </Link>
         </CardHeader>
-        <CardContent>
+        <CardContent className="">
           {isLoading ? (
             <div className="flex items-center justify-center w-full p-4">
               <Loader2 width={20} className="animate-spin" />
@@ -75,7 +88,7 @@ const BooksPage = (props: Props) => {
               sorry, failed to load books :( <br /> please try again later
             </p>
           ) : (
-            <Table>
+            <Table className="">
               <TableHeader>
                 <TableRow>
                   <TableHead className="hidden w-[100px] sm:table-cell">
