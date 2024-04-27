@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/api_utils/api";
+import { Loader, Loader2 } from "lucide-react";
 
 const Login = () => {
   const { toast } = useToast();
@@ -68,8 +69,16 @@ const Login = () => {
             <Label htmlFor="password">Password</Label>
             <Input id="password" type="password" required ref={passwordRef} />
           </div>
-          <Button className="w-full" onClick={handleLogin}>
-            Sign in
+          <Button
+            className="flex items-center gap-1"
+            onClick={handleLogin}
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? (
+              <Loader2 width={18} className="animate-spin" />
+            ) : (
+              "Sign in"
+            )}
           </Button>
           <div className="mt-2 text-sm text-center ">
             Don't have an account?{" "}

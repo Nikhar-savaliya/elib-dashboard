@@ -8,5 +8,5 @@ const api = axios.create({
 });
 
 export const login = async (data: { email: string; password: string }) => {
-  api.post("/users/login", data);
+  await api.post("/users/login", data);
 };

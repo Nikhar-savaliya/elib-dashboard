@@ -3,15 +3,11 @@ import {
   Book,
   CircleUser,
   Home,
-  LineChart,
   Menu,
   Package,
   Search,
-  ShoppingCart,
-  Users,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
