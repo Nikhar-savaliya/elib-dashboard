@@ -15,17 +15,21 @@ import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/api_utils/api";
 import { Loader2 } from "lucide-react";
+import useUserStore from "@/store";
 
 const Login = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const updateToken = useUserStore((state) => state.updateToken);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
+      updateToken(data.accessToken);
       toast({
         variant: "success",
         title: "logged in successfully",
@@ -33,10 +37,12 @@ const Login = () => {
       });
       navigate("/dashboard/home");
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.log(error);
+      const errorMessage = error.response?.data?.message || "Failed to login";
       toast({
         variant: "destructive",
-        title: "Failed to login",
+        title: errorMessage,
         duration: 1500,
       });
     },
