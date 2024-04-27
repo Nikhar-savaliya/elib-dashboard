@@ -13,7 +13,7 @@ const useUserStore = create<UserStore>()(
         token: "",
         updateToken: (newToken) => set({ token: newToken }),
       }),
-      { name: "token-store" }
+      { name: "user-store" }
     )
   )
 );

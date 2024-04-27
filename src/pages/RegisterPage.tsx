@@ -15,10 +15,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "@/api_utils/api";
 import { Loader2 } from "lucide-react";
+import useUserStore from "@/store";
 
 const RegisterPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const setToken = useUserStore((state) => state.updateToken);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -26,7 +29,8 @@ const RegisterPage = () => {
 
   const mutation = useMutation({
     mutationFn: register,
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
+      setToken(data.accessToken);
       toast({
         variant: "success",
         title: "logged in successfully",
@@ -34,10 +38,11 @@ const RegisterPage = () => {
       });
       navigate("/dashboard/home");
     },
-    onError: () => {
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.message || "Failed to login";
       toast({
         variant: "destructive",
-        title: "failed to register user",
+        title: errorMessage,
         duration: 1500,
       });
     },

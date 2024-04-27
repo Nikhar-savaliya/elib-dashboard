@@ -17,10 +17,6 @@ export const register = async (data: {
   email: string;
   password: string;
 }) => {
-  try {
-    const response = await api.post("/users/register", data);
-    return response;
-  } catch (error) {
-    return error;
-  }
+  const response = await api.post("/users/register", data);
+  return response;
 };
