@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/api_utils/api";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const { toast } = useToast();
@@ -32,6 +32,13 @@ const Login = () => {
         duration: 1500,
       });
       navigate("/dashboard/home");
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Failed to login",
+        duration: 1500,
+      });
     },
   });
 
