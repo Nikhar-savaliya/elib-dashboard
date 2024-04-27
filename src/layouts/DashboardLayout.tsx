@@ -28,15 +28,24 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import useUserStore from "@/store";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {};
 
 const DashboardLayout = (props: Props) => {
-  const token = useUserStore((state) => state.token);
+  const { token, updateToken } = useUserStore((state) => state);
 
   if (!token) {
     return <Navigate to={"/auth/login"} replace />;
   }
+
+  const handleLogout = () => {
+    toast({
+      variant: "success",
+      title: "Logged out successfully ",
+    });
+    updateToken("");
+  };
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -168,7 +177,12 @@ const DashboardLayout = (props: Props) => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="font-bold text-primary"
+              >
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

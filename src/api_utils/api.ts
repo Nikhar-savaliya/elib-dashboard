@@ -20,3 +20,13 @@ export const register = async (data: {
   const response = await api.post("/users/register", data);
   return response;
 };
+
+export const getBooks = async () => {
+  try {
+    const response = await api.get("/books");
+    return response;
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    throw error;
+  }
+};
