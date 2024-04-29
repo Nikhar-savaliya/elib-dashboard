@@ -64,8 +64,8 @@ const BooksPage = (props: Props) => {
 
       <Card x-chunk="dashboard-06-chunk-0" className="">
         <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Books</CardTitle>
+          <div className="flex flex-col gap-1">
+            <CardTitle className="text-lg">Books</CardTitle>
             <CardDescription>Manage your Books right from here</CardDescription>
           </div>
           <Link to={"/dashboard/books/create"}>

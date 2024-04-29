@@ -1,3 +1,4 @@
+import useUserStore from "@/store";
 import axios from "axios";
 
 const api = axios.create({
@@ -5,6 +6,16 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+// interceptor to add authorization token
+api.interceptors.request.use((config) => {
+  const token = useUserStore.getState().token;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export const login = async (userData: { email: string; password: string }) => {
@@ -30,3 +41,10 @@ export const getBooks = async () => {
     throw error;
   }
 };
+
+export const createBook = async (data: FormData) =>
+  api.post("/books", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
