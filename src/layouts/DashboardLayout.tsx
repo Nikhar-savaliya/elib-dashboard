@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
 import useUserStore from "@/store";
 import { toast } from "@/components/ui/use-toast";
 
@@ -63,20 +63,28 @@ const DashboardLayout = (props: Props) => {
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
+              <NavLink
                 to="/dashboard/home"
-                className="flex items-center gap-3 px-3 py-2 transition-all rounded-lg text-primary hover:text-primary bg-popover-foreground/5"
+                className={({ isActive }) => {
+                  return `mx-0.5 flex items-center gap-4 rounded-md px-3 py-2 text-muted-foreground hover:text-foreground ${
+                    isActive && "bg-popover-foreground/5"
+                  }`;
+                }}
               >
-                <Home className="w-4 h-4" />
+                <Home className="w-5 h-5" />
                 Dashboard
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/dashboard/books"
-                className="flex items-center gap-3 px-3 py-2 transition-all rounded-lg text-muted-foregroundhover:text-primary"
+                className={({ isActive }) => {
+                  return `mx-0.5 flex items-center gap-4 rounded-md px-3 py-2 text-muted-foreground hover:text-foreground ${
+                    isActive && "bg-popover-foreground/5"
+                  }`;
+                }}
               >
-                <Package className="w-4 h-4" />
-                Books{" "}
-              </Link>
+                <Package className="w-5 h-5" />
+                Books
+              </NavLink>
             </nav>
           </div>
           <div className="p-4 mt-auto">
@@ -119,20 +127,28 @@ const DashboardLayout = (props: Props) => {
                   <Book className="w-6 h-6" />
                   <span className="sr">Elib Inc</span>
                 </Link>
-                <Link
+                <NavLink
                   to="/dashboard/home"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground bg-popover-foreground/5"
+                  className={({ isActive }) => {
+                    return `mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+                      isActive && "bg-popover-foreground/5"
+                    }`;
+                  }}
                 >
                   <Home className="w-5 h-5" />
                   Dashboard
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/dashboard/books"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                  className={({ isActive }) => {
+                    return `mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+                      isActive && "bg-popover-foreground/5"
+                    }`;
+                  }}
                 >
                   <Package className="w-5 h-5" />
                   Books
-                </Link>
+                </NavLink>
               </nav>
               <div className="mt-auto">
                 <Card>
