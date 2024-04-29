@@ -28,8 +28,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createBook } from "@/api_utils/api";
+import { Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -50,6 +52,8 @@ const formSchema = z.object({
 });
 
 const CreateBook = () => {
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,10 +66,14 @@ const CreateBook = () => {
   const coverImageRef = form.register("coverImage");
   const bookFileRef = form.register("bookFile");
 
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: createBook,
     onSuccess: (res) => {
+      queryClient.invalidateQueries({ queryKey: ["books"] });
       console.log(res);
+      navigate("/dashboard/books");
     },
   });
 
@@ -113,11 +121,20 @@ const CreateBook = () => {
                 </CardDescription>
               </div>
               <div className="flex gap-1">
-                <Button variant={"outline"}>
-                  <span>cancel</span>
-                </Button>
-                <Button type="submit">
-                  <span>submit</span>
+                <Link to={"/dashboard/books"}>
+                  <Button variant={"outline"}>
+                    <span>cancel</span>
+                  </Button>
+                </Link>
+                <Button
+                  type="submit"
+                  className={"flex items-center "}
+                  disabled={mutation.isPending}
+                >
+                  {mutation.isPending && (
+                    <Loader2 width={18} className="animate-spin mr-1" />
+                  )}
+                  <span className="">submit</span>
                 </Button>
               </div>
             </CardHeader>
