@@ -39,9 +39,7 @@ import { Badge } from "@/components/ui/badge";
 import { Book } from "@/types/Book";
 import { Link } from "react-router-dom";
 
-type Props = {};
-
-const BooksPage = (props: Props) => {
+const BooksPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["books"],
     queryFn: getBooks,

@@ -30,9 +30,7 @@ import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
 import useUserStore from "@/store";
 import { toast } from "@/components/ui/use-toast";
 
-type Props = {};
-
-const DashboardLayout = (props: Props) => {
+const DashboardLayout = () => {
   const { token, updateToken } = useUserStore((state) => state);
 
   if (!token) {
